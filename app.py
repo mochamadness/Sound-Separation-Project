@@ -4,13 +4,16 @@ import soundfile as sf
 from io import BytesIO
 from sound_sep import SoundSeparation
 
-# Initialize the SoundSeparation class
-sound_sep = SoundSeparation(config_path="config.yaml")
+# Initialize the SoundSeparation class once and store it in session state
+if 'sound_sep' not in st.session_state:
+    st.session_state.sound_sep = SoundSeparation(config_path="config.yaml")
+
+sound_sep = st.session_state.sound_sep
 
 st.title("Audio Source Separation")
 
 # Upload audio file
-uploaded_file = st.file_uploader("Upload an audio file", type=["wav"])
+uploaded_file = st.file_uploader("Upload an audio file", type=["wav", "mp3", "ogg", "flac", "aac", "m4a"])
 
 if uploaded_file is not None:
     st.audio(uploaded_file)
@@ -40,10 +43,7 @@ if uploaded_file is not None and process_button:
         
         # Display the audio player
         st.audio(audio_buffer, format='audio/wav')
-        # display probability of gender speaker
-
-
-
+        # Display probability of gender speaker
 
 # Run the Streamlit app
 # To run the app, use the command: streamlit run app.py
