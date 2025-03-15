@@ -11,11 +11,11 @@ st.title("Audio Source Separation")
 
 # Upload audio file
 uploaded_file = st.file_uploader("Upload an audio file", type=["wav"])
-process_button = st.button("Start Processing")
 
 if uploaded_file is not None:
     st.audio(uploaded_file)
 
+process_button = st.button("Start Processing")
 
 if uploaded_file is not None and process_button:
     # Read the audio file
