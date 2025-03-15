@@ -11,8 +11,13 @@ st.title("Audio Source Separation")
 
 # Upload audio file
 uploaded_file = st.file_uploader("Upload an audio file", type=["wav"])
+process_button = st.button("Start Processing")
 
 if uploaded_file is not None:
+    st.audio(uploaded_file)
+
+
+if uploaded_file is not None and process_button:
     # Read the audio file
     mixture, original_sample_rate = sound_sep.read_audio_file(uploaded_file)
 
@@ -20,7 +25,7 @@ if uploaded_file is not None:
     diarization, sources_hat = sound_sep.separate_sound(mixture, original_sample_rate)
 
     # Display the number of sources
-    num_sources = sources_hat.shape[1]
+    num_sources = sources_hat.getDimension()
     st.write(f"Number of sources extracted: {num_sources}")
 
     # Display each source
@@ -35,6 +40,10 @@ if uploaded_file is not None:
         
         # Display the audio player
         st.audio(audio_buffer, format='audio/wav')
+        # display probability of gender speaker
+
+
+
 
 # Run the Streamlit app
 # To run the app, use the command: streamlit run app.py
